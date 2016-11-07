@@ -10,7 +10,6 @@
      */
     function init() {
         //Creating instances for each visualization
-        var mapView = new MapView();
 
         var bubbleChart = new BubbleChart();
 
@@ -28,6 +27,8 @@
         //     var yearChart = new YearChart(electoralVoteChart, tileChart, votePercentageChart, electionWinners);
         //     yearChart.update();
         // });
+        var mapView = new MapView(bubbleChart, houseChart, rentChart, detailCards, stateData);
+        mapView.update();
     }
 
     /**
