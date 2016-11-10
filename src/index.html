@@ -12,9 +12,21 @@
     <!--<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">-->
 </head>
 <body>
-
 <div id="map-view"></div>
-<div id="bubble-chart"></div>
+<div id="bubble-chart">
+    <p>
+        <label for="slider"
+               style="display: inline-block; width: 100px; text-align: right">
+            Year: <span id="year" style="width:1000px">…</span>
+        </label>
+        <input type="range" min="1996" max="2016" id="slider">
+    </p>
+    <svg width="1000" height="400">
+        <g id="xAxis"></g>
+        <g id="yAxis"></g>
+        <g id="circles"></g>
+    </svg>
+</div>
 <div id="house-chart"></div>
 <div id="rent-chart"></div>
 <div id="detail-cards"></div>
