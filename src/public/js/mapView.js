@@ -35,6 +35,8 @@ MapView.prototype.init = function(){
     self.svg = divMapView.append("svg")
         .attr("width",self.svgWidth)
         .attr("height",self.svgHeight)
+
+    console.log("MapView.prototype.init");
 };
 
 /**

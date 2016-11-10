@@ -27,6 +27,8 @@
         //     var yearChart = new YearChart(electoralVoteChart, tileChart, votePercentageChart, electionWinners);
         //     yearChart.update();
         // });
+        var stateData = "PLACE_HOLDER_FOR STATES_DATA_FOR_MAP";
+
         var mapView = new MapView(bubbleChart, houseChart, rentChart, detailCards, stateData);
         mapView.update();
     }
