@@ -21,7 +21,7 @@ function MapView(bubbleChart, houseChart, rentChart, detailCards, statesData) {
 /**
  * Initializes the svg elements required for this chart
  */
-MapView.prototype.init = function(){
+MapView.prototype.init = function() {
     var self = this;
     self.margin = {top: 10, right: 20, bottom: 30, left: 50};
     var divMapView = d3.select("#map-view");
@@ -33,10 +33,41 @@ MapView.prototype.init = function(){
 
     //creates svg element within the div
     self.svg = divMapView.append("svg")
-        .attr("width",self.svgWidth)
-        .attr("height",self.svgHeight)
+        .attr("width", self.svgWidth)
+        .attr("height", self.svgHeight);
 
-    console.log("MapView.prototype.init");
+
+    console.log("MapView.prototype.init hi");
+
+    var projection = d3.geoAlbersUsa()
+        .translate([self.svgWidth/2, self.svgHeight/2])    // translate to center of screen
+        .scale([800]);          // scale things down so see entire US
+
+    // Define path generator
+    var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+        .projection(projection);  // tell path generator to use albersUsa projection
+
+
+    // Load GeoJSON data and merge with states data
+    d3.json("data/us_states.json", function(json) {
+
+    // Bind the data to the SVG and create one path per GeoJSON feature
+        self.svg.selectAll("path")
+            .data(json.features)
+            .enter()
+            .append("path")
+            .attr("id", function (d) {
+                return d.properties.name;
+            })
+            .attr("d", path)
+            .classed("states", true)
+            .on("click", function(d) {
+                console.log("Clicked - " + d.properties.name);
+                self.selectedState(d.properties.name);
+            });
+
+    });
+
 };
 
 /**
@@ -46,3 +77,14 @@ MapView.prototype.init = function(){
 MapView.prototype.update = function(){
     var self = this;
 };
+
+
+/**
+ * Updates based on a selected state
+ * @param stateId
+ */
+MapView.prototype.selectedState = function(stateId) {
+    var self = this;
+    self.svg.select("#"+stateId)
+        .classed("states selected_states", true);
+}

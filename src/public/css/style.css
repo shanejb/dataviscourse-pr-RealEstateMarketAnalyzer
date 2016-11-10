@@ -1,0 +1,15 @@
+/* On mouse hover, lighten state color */
+path:hover {
+    fill-opacity: .7;
+}
+
+.states{
+     stroke: #fff;
+     stroke-width: 1;
+     fill:   #E1E8E4;
+ }
+
+.selected_states{
+    fill:   #2D38DE;
+}
+
