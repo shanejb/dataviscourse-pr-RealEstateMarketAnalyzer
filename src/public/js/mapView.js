@@ -36,9 +36,6 @@ MapView.prototype.init = function() {
         .attr("width", self.svgWidth)
         .attr("height", self.svgHeight);
 
-
-    console.log("MapView.prototype.init hi");
-
     var projection = d3.geoAlbersUsa()
         .translate([self.svgWidth/2, self.svgHeight/2])    // translate to center of screen
         .scale([800]);          // scale things down so see entire US
@@ -62,7 +59,7 @@ MapView.prototype.init = function() {
             .attr("d", path)
             .classed("states", true)
             .on("click", function(d) {
-                console.log("Clicked - " + d.properties.abbr);
+                //console.log("Clicked - " + d.properties.abbr);
                 self.selectedState(d.properties.abbr);
             });
 
