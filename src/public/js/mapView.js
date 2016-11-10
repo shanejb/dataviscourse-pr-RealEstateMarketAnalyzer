@@ -57,13 +57,13 @@ MapView.prototype.init = function() {
             .enter()
             .append("path")
             .attr("id", function (d) {
-                return d.properties.name;
+                return d.properties.abbr;
             })
             .attr("d", path)
             .classed("states", true)
             .on("click", function(d) {
-                console.log("Clicked - " + d.properties.name);
-                self.selectedState(d.properties.name);
+                console.log("Clicked - " + d.properties.abbr);
+                self.selectedState(d.properties.abbr);
             });
 
     });
