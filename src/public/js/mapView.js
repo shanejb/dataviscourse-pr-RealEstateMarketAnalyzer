@@ -44,7 +44,6 @@ MapView.prototype.init = function() {
     var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
         .projection(projection);  // tell path generator to use albersUsa projection
 
-
     // Load GeoJSON data and merge with states data
     d3.json("data/us_states.json", function(json) {
 
