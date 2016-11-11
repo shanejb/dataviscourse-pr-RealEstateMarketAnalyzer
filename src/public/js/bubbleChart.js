@@ -68,7 +68,7 @@ BubbleChart.prototype.init = function () {
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
-                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 10})
+                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 7})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
                 .attr("cy", function(d) { return self.yScale(d["1996"]); })
               .style("fill", function(d) { return self.colorScale(d.SizeRank)});

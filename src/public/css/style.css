@@ -9,7 +9,7 @@ html, body {
 header {
     margin-top: 0;
     padding: 15px 20px;
-    border-bottom: 1px solid #bfbfbf;
+    border-bottom: 1px solid #d5d5d5;
     background-color: #ffffff;
     -webkit-box-shadow: 0px 2px 17px -3px rgba(199,199,199,1);
     -moz-box-shadow: 0px 2px 17px -3px rgba(199,199,199,1);
@@ -56,7 +56,8 @@ path:hover {
 }
 
 .selected_states {
-    fill: #2D38DE;
+    /*fill: #2D38DE;*/
+    fill: steelblue;
 }
 
 h1, h2 {
@@ -69,6 +70,11 @@ h1 {
 
 h2 {
     color: #4d4d4d;
+}
+
+/* Bubble Chart */
+circle {
+    opacity: 0.75;
 }
 
 /* Line charts */
