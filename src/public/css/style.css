@@ -83,13 +83,19 @@ circle {
     height: 380px;
 }
 
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
 /* Detail cards */
 
 .container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    flex-flow: row wrap;  shorthand for flex-direction and flex-wrap
+    flex-flow: row wrap;  /*shorthand for flex-direction and flex-wrap*/
     align-items: flex-start;
     height: 300px;
     /*justify-content: space-between;*/
