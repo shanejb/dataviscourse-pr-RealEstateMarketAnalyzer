@@ -11,9 +11,24 @@ function BubbleChart() {
  */
 BubbleChart.prototype.init = function () {
     var self = this;
-    self.svgBounds = d3.select("#bubble-chart").node().getBoundingClientRect();
-        self.xAxisWidth = 100;
-        self.yAxisHeight = 50;
+    var divBubbleChart = d3.select("#bubble-chart");
+
+    // Gets access to the div element created for this chart from HTML
+    self.svgBounds = divBubbleChart.node().getBoundingClientRect();
+    self.xAxisWidth = 100;
+    self.yAxisHeight = 50;
+    self.svgWidth = self.svgBounds.width - self.xAxisWidth;
+    self.svgHeight = 400;
+
+    // creates svg element within the div
+    self.svg = divBubbleChart.append("svg")
+        .attr("width", self.svgWidth)
+        .attr("height", self.svgHeight);
+
+    self.svg.append("g").attr("id", "xAxis");
+    self.svg.append("g").attr("id", "yAxis");
+    self.svg.append("g").attr("id", "circles");
+
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
             // Create the x, y and r scales
             // Create colorScale
@@ -21,13 +36,13 @@ BubbleChart.prototype.init = function () {
             self.xScale = d3.scaleBand()
                 .domain(data.map(function (d) {
                     return parseInt(d.SizeRank);
-                })).range([self.yAxisHeight, self.svgBounds.width/ 1.5 ]);
+                })).range([self.yAxisHeight, self.svgWidth ]);
 
             self.maxValue = d3.max(data, function (d) {
                 return parseInt(d["2016"]);
             });
             self.yScale = d3.scaleLinear()
-                .domain([0, self.maxValue]).range([self.svgBounds.height - self.xAxisWidth,10]);
+                .domain([0, self.maxValue]).range([self.svgHeight - self.yAxisHeight,10]);
             self.rScale = d3.scaleLinear()
                 .domain([1,50])
                 .range([10,1]);
@@ -39,7 +54,7 @@ BubbleChart.prototype.init = function () {
             self.xAxis = d3.axisLeft()
                 .scale(self.xScale);
             d3.select("#xAxis")
-                .attr("transform", "rotate(-90) translate(" + (self.xAxisWidth - self.svgBounds.height) + ",0)")
+                .attr("transform", "rotate(-90) translate(" + (self.yAxisHeight - self.svgHeight -1) + ",0)")
                 .call(self.xAxis);
             self.yAxis = d3.axisLeft()
                 .scale(self.yScale);
@@ -53,7 +68,7 @@ BubbleChart.prototype.init = function () {
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
-                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 10})
+                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 7})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
                 .attr("cy", function(d) { return self.yScale(d["1996"]); })
               .style("fill", function(d) { return self.colorScale(d.SizeRank)});

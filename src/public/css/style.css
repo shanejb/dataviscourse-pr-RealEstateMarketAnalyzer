@@ -1,29 +1,123 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    height: 100%;
+    min-height: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+header {
+    margin-top: 0;
+    padding: 15px 20px;
+    border-bottom: 1px solid #d5d5d5;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 2px 17px -3px rgba(199,199,199,1);
+    -moz-box-shadow: 0px 2px 17px -3px rgba(199,199,199,1);
+    box-shadow: 0px 2px 17px -3px rgba(199,199,199,1);
+}
+
+header h1 {
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+section {
+    padding: 0 20px;
+    box-sizing: border-box;
+    clear: both;
+    margin-bottom: 15px;
+}
+
+article {
+    /*border: 1px solid #e5e5e5;*/
+    width: 48.5%;
+}
+
+article div {
+    /*background-color: #ffffff;*/
+    /*-webkit-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+    /*-moz-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+    /*box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+}
+
+.map-container {
+    height: 515px;
+}
+
 /* On mouse hover, lighten state color */
 path:hover {
     fill-opacity: .7;
 }
 
-.states{
-     stroke: #fff;
-     stroke-width: 1;
-     fill:   #E1E8E4;
- }
+.states {
+    stroke: #fff;
+    stroke-width: 1;
+    fill: #E1E8E4;
+}
 
-.selected_states{
-    fill:   #2D38DE;
+.selected_states {
+    /*fill: #2D38DE;*/
+    fill: steelblue;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 h1 {
-    margin-top: 0;
-    font-family: 'dusha';
     color: #d20a11;
 }
 
 h2 {
-    font-family: 'dusha';
-    color: #d20a11;
-    padding-bottom: 0;
-    margin-top: 3px;
-    margin-bottom: 0;
+    color: #4d4d4d;
 }
 
+/* Bubble Chart */
+circle {
+    opacity: 0.75;
+}
+
+/* Line charts */
+.line-charts-container {
+    height: 380px;
+}
+
+/* Detail cards */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;  shorthand for flex-direction and flex-wrap
+    align-items: flex-start;
+    height: 300px;
+    /*justify-content: space-between;*/
+}
+
+.card{
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    /*margin: auto;*/
+    background-color: #ffffff;
+    -webkit-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    -moz-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    border: 1px solid #e5e5e5;
+    padding: 0 20px;
+}
+
+.card-title {
+    color: steelblue;
+}
+
+
+/* Helper classes */
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}

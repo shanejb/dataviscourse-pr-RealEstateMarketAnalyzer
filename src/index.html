@@ -5,6 +5,7 @@
     <title>Real Estate Market Analyzer</title>
     <link rel="stylesheet" href="public/css/style.css"/>
     <script type="text/javascript" src="node_modules/d3/build/d3.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
     <!--<script src="https://d3js.org/d3.v4.js"></script>-->
     <!--<script type="text/javascript" src="node_modules/d3-tip/index.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>-->
@@ -16,41 +17,71 @@
     <h1>Real Estate Market Analyzer</h1>
 </header>
 
-<div id="map-view">
-    <h2>United States Map</h2>
+<section class="map-container">
+    <article class="pull-left">
+        <h2>United States Map</h2>
+        <div id="map-view">
+        </div>
+    </article>
 
-</div>
+    <article class="pull-right">
+        <h2>Home Value Time Series</h2>
+        <div id="bubble-chart">
+            <!--<h2>Bubble Chart</h2>-->
+            <p>
+                <label for="slider"
+                       style="display: inline-block; width: 100px; text-align: right">
+                    Year: <span id="year" style="width:1000px">…</span>
+                </label>
+                <input type="range" min="1996" max="2016" id="slider">
+            </p>
+            <!--<svg width="1000" height="400">-->
+                <!--<g id="xAxis"></g>-->
+                <!--<g id="yAxis"></g>-->
+                <!--<g id="circles"></g>-->
+            <!--</svg>-->
+        </div>
+    </article>
+</section>
 
-<div id="bubble-chart">
-    <!--<h2>Bubble Chart</h2>-->
-    <p>
-        <label for="slider"
-               style="display: inline-block; width: 100px; text-align: right">
-            Year: <span id="year" style="width:1000px">…</span>
-        </label>
-        <input type="range" min="1996" max="2016" id="slider">
-    </p>
-    <svg width="1000" height="400">
-        <g id="xAxis"></g>
-        <g id="yAxis"></g>
-        <g id="circles"></g>
-    </svg>
-</div>
+<section class="line-charts-container">
+    <article class="pull-left">
+        <h2>Home Value Chart</h2>
+        <div id="house-chart">
+            <img src="images/line_chart.gif"/>
+        </div>
+    </article>
 
-<div id="house-chart">
-    <h2>Home Value Chart</h2>
-    <img src="images/line_chart.gif"/>
-</div>
+    <article class="pull-right">
+        <h2>Rent Chart</h2>
+        <div id="rent-chart">
+            <img src="images/line_chart.gif"/>
+        </div>
+    </article>
+</section>
 
-<div id="rent-chart">
-    <h2>Rent Chart</h2>
-    <img src="images/line_chart.gif"/>
-</div>
-
-<div id="detail-cards">
-    <h2>Selected States Details</h2>
-    <img src="images/details.png"/>
-</div>
+<section>
+    <h2>States Insights</h2>
+    <div id="detail-cards" class="container">
+        <!--<img src="images/details.png"/>-->
+        <div class="card">
+            <div class="card-title"><h3>California</h3></div>
+            <div class="card-body">
+                <h4>Population: </h4><span>1234512</span>
+                <h4>Ranking: </h4><span>1</span>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title"><h3>Utah</h3></div>
+            <div class="card-body">
+                <h4>Population: </h4><span>345122</span>
+                <h4>Ranking: </h4><span>27</span>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Load JavaScript at the end -->
 <script type="application/javascript" src="public/js/bubbleChart.js"></script>
