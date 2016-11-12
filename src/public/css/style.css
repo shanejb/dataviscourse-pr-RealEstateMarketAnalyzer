@@ -4,6 +4,7 @@ html, body {
     background-color: #fafafa;
     height: 100%;
     min-height: 100%;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 header {
@@ -60,7 +61,7 @@ path:hover {
     fill: steelblue;
 }
 
-h1, h2 {
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto Condensed', sans-serif;
 }
 
@@ -80,6 +81,35 @@ circle {
 /* Line charts */
 .line-charts-container {
     height: 380px;
+}
+
+/* Detail cards */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;  shorthand for flex-direction and flex-wrap
+    align-items: flex-start;
+    height: 300px;
+    /*justify-content: space-between;*/
+}
+
+.card{
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    /*margin: auto;*/
+    background-color: #ffffff;
+    -webkit-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    -moz-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
+    border: 1px solid #e5e5e5;
+    padding: 0 20px;
+}
+
+.card-title {
+    color: steelblue;
 }
 
 
