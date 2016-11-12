@@ -48,7 +48,7 @@ HouseChart.prototype.init = function () {
 
         console.log(self.formatData);
 
-        self.maxValue = 472100; // TODO: Fix this later, this is done for rapid prototyping
+        self.maxValue = 524100; // TODO: Fix this later, this is done for rapid prototyping
         self.xScale = d3.scaleBand()
             .domain(self.yearsDomain)
             .range([0, self.svgWidth - self.xAxisWidth]);
@@ -59,7 +59,7 @@ HouseChart.prototype.init = function () {
         // define the line
         self.valueLine = d3.line()
             .x(function (d) {
-                return self.xScale(d.year);
+                return self.xScale(d.year) + 10;
                 // return d.year;
             })
             .y(function (d) {
