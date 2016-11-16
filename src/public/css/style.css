@@ -89,6 +89,10 @@ circle {
     stroke-width: 2px;
 }
 
+#house-chart circle, #rent-chart circle {
+    stroke: #ffffff;
+}
+
 /* Detail cards */
 
 .container {

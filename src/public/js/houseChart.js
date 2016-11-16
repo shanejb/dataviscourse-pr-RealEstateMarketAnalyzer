@@ -87,6 +87,21 @@ HouseChart.prototype.init = function () {
         self.svg.select("#yAxis")
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .call(d3.axisLeft(self.yScale));
+
+        // Draw dots
+        self.svg.selectAll("dot")
+            .data(self.formatData.series)
+            .enter()
+            .append("circle")
+            .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
+            .attr("r", 3)
+            .attr("cx", function (d) {
+                return self.xScale(d.year) + 12;
+            })
+            .attr("cy", function (d) {
+                return self.yScale(d.price);
+            })
+            .attr("style", "border: 2px solid #fff;");
     });
 };
 
