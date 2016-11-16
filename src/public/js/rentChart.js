@@ -30,7 +30,6 @@ RentChart.prototype.init = function () {
     self.svg.append("g").attr("id", "yAxis");
     self.svg.append("g").attr("id", "line");
 
-
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
         var selectedState = data[0];
         console.log(selectedState);
@@ -41,14 +40,16 @@ RentChart.prototype.init = function () {
             abbr: selectedState['abbr'],
             series: []
         };
+        self.maxValue = 0;
+
         for (var i = 1996; i < 2017; i++) {
             self.yearsDomain.push(i);
             self.formatData['series'].push({ year: i, price: selectedState[i]});
+            self.maxValue = selectedState[i] > self.maxValue ? selectedState[i] : self.maxValue;
         }
 
         console.log(self.formatData);
 
-        self.maxValue = 524100; // TODO: Fix this later, this is done for rapid prototyping
         self.xScale = d3.scaleBand()
             .domain(self.yearsDomain)
             .range([0, self.svgWidth - self.xAxisWidth]);
@@ -67,18 +68,26 @@ RentChart.prototype.init = function () {
                 // return d.price;
             });
 
+        // Draw line
         self.svg.select("#line")
-            .attr("transform", "translate(50, 0)")
+            .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .append("path")
             .data([self.formatData.series])
             .classed("line", true)
             .attr("d", self.valueLine);
-        self.svg.select("#xAxis")
-            .attr("transform", "translate(50," + (self.svgHeight - self.yAxisHeight) + ")")
-            .call(d3.axisBottom(self.xScale));
 
+        // Draw x axis
+        self.svg.select("#xAxis")
+            .attr("transform", "translate(" + self.margin.left + "," + (self.svgHeight - self.yAxisHeight + self.margin.top) + ")")
+            .call(d3.axisBottom(self.xScale))
+            .selectAll('text')
+            .attr("x", -18)
+            .attr("y", 5)
+            .attr("transform", "rotate(-45)");
+
+        // Draw y axis
         self.svg.select("#yAxis")
-            .attr("transform", "translate(" + self.yAxisHeight + ", 0)")
+            .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .call(d3.axisLeft(self.yScale));
     });
 };
