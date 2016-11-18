@@ -24,32 +24,85 @@ HouseChart.prototype.init = function () {
     // Creates svg element within the div
     self.svg = divHouseChart.append("svg")
         .attr("width", self.svgWidth)
-        .attr("height", self.svgHeight);
+        .attr("height", self.svgHeight)
+        .on("click", function () {
+            self.update();
+        });
 
     self.svg.append("g").attr("id", "xAxis");
     self.svg.append("g").attr("id", "yAxis");
-    self.svg.append("g").attr("id", "line");
+    self.svg.append("g").attr("id", "lines");
+};
+
+/**
+ * Create a line chart
+ *
+ * @param selectedState
+ */
+HouseChart.prototype.update = function (selectedStates) {
+    var self = this;
+    selectedStates = ['CA', 'UT', 'NY', 'ND'];
+
+    // self.svg.append("g").attr("id", "line");
 
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
         var selectedState = data[0];
         console.log(selectedState);
 
+        // Generate years domain for x axis - this never change
         self.yearsDomain = [];
-        self.formatData = {
-            RegionName: selectedState['RegionName'],
-            abbr: selectedState['abbr'],
-            series: []
-        };
-        self.maxValue = 0;
-
         for (var i = 1996; i < 2017; i++) {
             self.yearsDomain.push(i);
-            self.formatData['series'].push({ year: i, price: selectedState[i]});
-            self.maxValue = selectedState[i] > self.maxValue ? selectedState[i] : self.maxValue;
         }
 
-        console.log(self.formatData);
+        // Format data for each selected states
+        self.formattedData = [];
+        self.maxValue = 0;
 
+        // self.formatData = {
+        //     RegionName: selectedState['RegionName'],
+        //     abbr: selectedState['abbr'],
+        //     series: []
+        // };
+        for (var abbr in selectedStates) {
+
+            // Get state data
+            var state = data.filter(function (d) {
+                return d.abbr == selectedStates[abbr]
+            });
+
+            state = state[0];
+
+            var temp = {
+                RegionName: state["RegionName"],
+                abbr: state["abbr"],
+                series: []
+            };
+
+            // Process state data
+            for (var i = 1996; i < 2017; i++) {
+                temp["series"].push({
+                    year: i,
+                    price: isNaN(parseInt(state[i])) ? 0 : parseInt(state[i])
+                });
+                self.maxValue = state[i] > self.maxValue ? state[i] : self.maxValue;
+            }
+
+            // Add to formattedData
+            self.formattedData.push(temp);
+        }
+
+        console.log(self.formattedData);
+        console.log(lines);
+
+
+        // for (var i = 1996; i < 2017; i++) {
+        //     self.yearsDomain.push(i);
+        //     self.formatData['series'].push({ year: i, price: selectedState[i]});
+        //     self.maxValue = selectedState[i] > self.maxValue ? selectedState[i] : self.maxValue;
+        // }
+
+        // Define scales
         self.xScale = d3.scaleBand()
             .domain(self.yearsDomain)
             .range([0, self.svgWidth - self.xAxisWidth]);
@@ -60,19 +113,41 @@ HouseChart.prototype.init = function () {
         // define the line
         self.valueLine = d3.line()
             .x(function (d) {
-                return self.xScale(d.year) + 12;
+                return self.xScale(d.year) + 17;
             })
             .y(function (d) {
                 return self.yScale(d.price);
+            })
+            .defined(function (d) {
+                return d.price != 0;
             });
 
-        // Draw line
-        self.svg.select("#line")
+        // Draw lines
+        // self.svg.select("#line")
+        //     .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
+        //     .append("path")
+        //     .data([self.formatData.series])
+        //     .classed("line", true)
+        //     .attr("d", self.valueLine);
+
+        var lines = self.svg.select("#lines").selectAll("g").data(self.formattedData);
+        lines.exit().remove();
+        var linesEnter = lines.enter()
+            .append("g")
+            .attr("id", function (d) {
+                return d.abbr;
+            });
+        linesEnter.append("text");
+        lines = lines.merge(linesEnter);
+
+        lines
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .append("path")
-            .data([self.formatData.series])
+            .data(self.formattedData)
             .classed("line", true)
-            .attr("d", self.valueLine);
+            .attr("d", function (d) {
+                return self.valueLine(d.series);
+            });
 
         // Draw x axis
         self.svg.select("#xAxis")
@@ -89,27 +164,41 @@ HouseChart.prototype.init = function () {
             .call(d3.axisLeft(self.yScale));
 
         // Draw dots
-        self.svg.selectAll("dot")
-            .data(self.formatData.series)
+        // self.svg.selectAll("dot")
+        //     .data(self.formatData.series)
+        //     .enter()
+        //     .append("circle")
+        //     .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
+        //     .attr("r", 3)
+        //     .attr("cx", function (d) {
+        //         return self.xScale(d.year) + 12;
+        //     })
+        //     .attr("cy", function (d) {
+        //         return self.yScale(d.price);
+        //     })
+        //     .attr("style", "border: 2px solid #fff;");
+        lines.selectAll("dot")
+            .data(function (d) {
+                return d.series;
+            })
             .enter()
             .append("circle")
-            .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .attr("r", 3)
             .attr("cx", function (d) {
-                return self.xScale(d.year) + 12;
+                return self.xScale(d.year) + 17;
             })
             .attr("cy", function (d) {
                 return self.yScale(d.price);
+            });
+        lines.select("text")
+            .text(function (d) {
+                return d.abbr;
             })
-            .attr("style", "border: 2px solid #fff;");
+            .attr("x", self.svgWidth - self.xAxisWidth - 10)
+            .attr("y", function (d) {
+                console.log("creating text");
+                console.log(d);
+                return self.yScale(d.series[d.series.length - 1].price);
+            });
     });
-};
-
-/**
- * Create a line chart
- *
- * @param selectedState
- */
-HouseChart.prototype.update = function (selectedStates) {
-    var self = this;
 };

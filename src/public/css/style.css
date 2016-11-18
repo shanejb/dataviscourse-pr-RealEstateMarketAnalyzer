@@ -87,6 +87,7 @@ circle {
     fill: none;
     stroke: steelblue;
     stroke-width: 2px;
+    stroke-opacity: 0.8;
 }
 
 #house-chart circle, #rent-chart circle {
