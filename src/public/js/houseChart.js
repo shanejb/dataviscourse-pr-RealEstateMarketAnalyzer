@@ -59,13 +59,8 @@ HouseChart.prototype.update = function (selectedStates) {
         self.formattedData = [];
         self.maxValue = 0;
 
-        // self.formatData = {
-        //     RegionName: selectedState['RegionName'],
-        //     abbr: selectedState['abbr'],
-        //     series: []
-        // };
+        // Reformat selected states data
         for (var abbr in selectedStates) {
-
             // Get state data
             var state = data.filter(function (d) {
                 return d.abbr == selectedStates[abbr]
@@ -93,14 +88,6 @@ HouseChart.prototype.update = function (selectedStates) {
         }
 
         console.log(self.formattedData);
-        console.log(lines);
-
-
-        // for (var i = 1996; i < 2017; i++) {
-        //     self.yearsDomain.push(i);
-        //     self.formatData['series'].push({ year: i, price: selectedState[i]});
-        //     self.maxValue = selectedState[i] > self.maxValue ? selectedState[i] : self.maxValue;
-        // }
 
         // Define scales
         self.xScale = d3.scaleBand()
