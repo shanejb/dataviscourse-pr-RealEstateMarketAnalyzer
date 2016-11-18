@@ -96,6 +96,7 @@ HouseChart.prototype.update = function (selectedStates) {
         self.yScale = d3.scaleLinear()
             .domain([0, self.maxValue])
             .range([self.svgHeight - self.yAxisHeight, 0]);
+        self.zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
         // define the line
         self.valueLine = d3.line()
@@ -134,6 +135,9 @@ HouseChart.prototype.update = function (selectedStates) {
             .classed("line", true)
             .attr("d", function (d) {
                 return self.valueLine(d.series);
+            })
+            .style("stroke", function (d) {
+                return self.zScale(d.abbr);
             });
 
         // Draw x axis
@@ -177,6 +181,10 @@ HouseChart.prototype.update = function (selectedStates) {
             .attr("cy", function (d) {
                 return self.yScale(d.price);
             })
+            .style("fill", function (d) {
+                var parent = d3.select(this.parentNode).node();
+                return self.zScale(parent.id);
+            })
             .attr("visibility", function (d) { // Temporary hack to hide empty values for scatterplot
                 return d.price == 0 ? 'hidden' : '';
             });
@@ -186,8 +194,8 @@ HouseChart.prototype.update = function (selectedStates) {
             })
             .attr("x", self.svgWidth - self.xAxisWidth - 10)
             .attr("y", function (d) {
-                console.log("creating text");
-                console.log(d);
+                // console.log("creating text");
+                // console.log(d);
                 return self.yScale(d.series[d.series.length - 1].price);
             });
     });

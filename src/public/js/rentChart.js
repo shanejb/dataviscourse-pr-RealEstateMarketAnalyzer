@@ -60,6 +60,7 @@ RentChart.prototype.init = function () {
         self.yScale = d3.scaleLinear()
             .domain([0, self.maxValue])
             .range([self.svgHeight - self.yAxisHeight, 0]);
+        self.zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
         // define the line
         self.valueLine = d3.line()
@@ -76,7 +77,10 @@ RentChart.prototype.init = function () {
             .append("path")
             .data([self.formatData.series])
             .classed("line", true)
-            .attr("d", self.valueLine);
+            .attr("d", self.valueLine)
+            .style("stroke", function (d) {
+                return self.zScale(d.abbr);
+            });
 
         // Draw x axis
         self.svg.select("#xAxis")
