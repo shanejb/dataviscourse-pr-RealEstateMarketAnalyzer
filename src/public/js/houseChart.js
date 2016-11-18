@@ -176,6 +176,9 @@ HouseChart.prototype.update = function (selectedStates) {
             })
             .attr("cy", function (d) {
                 return self.yScale(d.price);
+            })
+            .attr("visibility", function (d) { // Temporary hack to hide empty values for scatterplot
+                return d.price == 0 ? 'hidden' : '';
             });
         lines.select("text")
             .text(function (d) {
