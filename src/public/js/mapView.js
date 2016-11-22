@@ -15,6 +15,7 @@ function MapView(bubbleChart, houseChart, rentChart, detailCards, statesData) {
     self.rentChart = rentChart;
     self.detailCards = detailCards;
     self.statesData = statesData;
+    self.selectedStates = [];
     self.init();
 };
 
@@ -59,7 +60,7 @@ MapView.prototype.init = function() {
             .classed("states", true)
             .on("click", function(d) {
                 //console.log("Clicked - " + d.properties.abbr);
-                self.selectedState(d.properties.abbr);
+                self.selectState(d.properties.abbr);
             });
 
     });
@@ -79,8 +80,16 @@ MapView.prototype.update = function(){
  * Updates based on a selected state
  * @param stateId
  */
-MapView.prototype.selectedState = function(stateId) {
+MapView.prototype.selectState = function(stateId) {
     var self = this;
     self.svg.select("#"+stateId)
         .classed("states selected_states", true);
+
+    // Populate house chart
+    self.selectedStates.push(stateId);
+    self.houseChart.update(self.selectedStates);
+
+    // TODO: populate rent chart
+
+    // TODO: populater detail cards
 }

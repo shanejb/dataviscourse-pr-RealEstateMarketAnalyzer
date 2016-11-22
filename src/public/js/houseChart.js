@@ -41,7 +41,7 @@ HouseChart.prototype.init = function () {
  */
 HouseChart.prototype.update = function (selectedStates) {
     var self = this;
-    selectedStates = ['CA', 'UT', 'NY', 'ND'];
+    // selectedStates = ['CA', 'UT', 'NY', 'ND']; // For testing purposes
 
     // self.svg.append("g").attr("id", "line");
 
@@ -76,11 +76,12 @@ HouseChart.prototype.update = function (selectedStates) {
 
             // Process state data
             for (var i = 1996; i < 2017; i++) {
+                var price = isNaN(parseInt(state[i])) ? 0 : parseInt(state[i]);
                 temp["series"].push({
                     year: i,
-                    price: isNaN(parseInt(state[i])) ? 0 : parseInt(state[i])
+                    price: price
                 });
-                self.maxValue = state[i] > self.maxValue ? state[i] : self.maxValue;
+                self.maxValue = price > self.maxValue ? price : self.maxValue;
             }
 
             // Add to formattedData
@@ -128,6 +129,8 @@ HouseChart.prototype.update = function (selectedStates) {
         linesEnter.append("text");
         lines = lines.merge(linesEnter);
 
+        lines.selectAll("path").remove(); // Inefficient but temporary fix to remove extra lines leftover.
+
         lines
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .append("path")
@@ -168,7 +171,10 @@ HouseChart.prototype.update = function (selectedStates) {
         //         return self.yScale(d.price);
         //     })
         //     .attr("style", "border: 2px solid #fff;");
-        lines.selectAll("dot")
+
+        lines.selectAll("circle").remove(); // Inefficient but temporary fix to remove extra lines leftover.
+
+        lines.selectAll("circle")
             .data(function (d) {
                 return d.series;
             })
