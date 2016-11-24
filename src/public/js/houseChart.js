@@ -47,7 +47,7 @@ HouseChart.prototype.update = function (selectedStates) {
 
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
         var selectedState = data[0];
-        console.log(selectedState);
+        //console.log(selectedState);
 
         // Generate years domain for x axis - this never change
         self.yearsDomain = [];
@@ -88,7 +88,7 @@ HouseChart.prototype.update = function (selectedStates) {
             self.formattedData.push(temp);
         }
 
-        console.log(self.formattedData);
+        //console.log(self.formattedData);
 
         // Define scales
         self.xScale = d3.scaleBand()

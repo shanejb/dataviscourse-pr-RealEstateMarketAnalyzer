@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="public/css/style.css"/>
     <script type="text/javascript" src="node_modules/d3/build/d3.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
     <!--<script src="https://d3js.org/d3.v4.js"></script>-->
     <!--<script type="text/javascript" src="node_modules/d3-tip/index.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>-->
@@ -21,7 +22,15 @@
     <article class="pull-left">
         <h2>United States Map</h2>
         <div id="map-view">
+            <p>
+                <label for="slider_states"
+                       style="display: inline-block; width: 100px; text-align: right">
+                    Year: <span id="year_states" style="width:1000px"></span>
+                </label>
+                <input type="range" min="1996" max="2016" id="slider_states">
+            </p>
         </div>
+        <div id="legend"></div>
     </article>
 
     <article class="pull-right">

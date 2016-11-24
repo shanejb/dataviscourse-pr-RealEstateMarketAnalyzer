@@ -32,7 +32,7 @@ RentChart.prototype.init = function () {
 
     d3.csv("data/State_Zri_AllHomes.csv", function(error, data) {
         var selectedState = data[0];
-        console.log(selectedState);
+        //console.log(selectedState);
 
         self.datesDomain = [];
         self.formatData = {
@@ -52,7 +52,7 @@ RentChart.prototype.init = function () {
             }
         }
 
-        console.log(self.formatData);
+        //console.log(self.formatData);
 
         self.xScale = d3.scaleBand()
             .domain(self.datesDomain)

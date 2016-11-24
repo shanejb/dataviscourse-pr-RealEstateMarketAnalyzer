@@ -57,8 +57,9 @@ path:hover {
 }
 
 .selected_states {
-    /*fill: #2D38DE;*/
-    fill: steelblue;
+    stroke: #DE141B;
+    stroke-width: 2;
+    /*fill-opacity: .7;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
