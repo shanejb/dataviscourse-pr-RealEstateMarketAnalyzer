@@ -1,4 +1,4 @@
-state,abbr,capital_city,largest_city,statehood,population2015,area_sqmi,land_area_sqmi,water_area_sqmi,reps
+state,abbr,capital_city,largest_city,statehood,population2015,area_sqmi_sqkm,land_area_sqmi_sqkm,water_area_sqmi_sqkm,reps
  Alabama,AL,Montgomery,Birmingham,"Dec. 14, 1819","4,858,979","52,420 (135,767)","50,645 (131,170)","1,775 (4,597)",7
  Alaska,AK,Juneau,Anchorage,"Jan. 3, 1959","738,432","665,384 (1,723,337)","570,641 (1,477,950)","94,743 (245,383)",1
  Arizona,AZ,Phoenix,Phoenix,"Feb. 14, 1912","6,828,065","113,990 (295,233)","113,594 (294,207)","396 (1,026)",9
