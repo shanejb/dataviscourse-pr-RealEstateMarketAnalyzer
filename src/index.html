@@ -6,7 +6,14 @@
     <link rel="stylesheet" href="public/css/style.css"/>
     <script type="text/javascript" src="node_modules/d3/build/d3.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
+    <!--Added for map legend-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
+    <!--Added for bootstrap-->
+    <!--<link href="lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">-->
+    <!--<script src="lib/jquery-3.1.1.min.js"></script>-->
+    <!--<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
+
+    <!--<script src="bootstrap-switch.js"></script>-->
     <!--<script src="https://d3js.org/d3.v4.js"></script>-->
     <!--<script type="text/javascript" src="node_modules/d3-tip/index.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>-->
@@ -21,6 +28,14 @@
 <section class="map-container">
     <article class="pull-left">
         <h2>United States Map</h2>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active" id="zhvi_map">
+                <input type="radio" name="map_options"  autocomplete="off" checked> Home Index (ZHVI)
+            </label>
+            <label class="btn btn-primary" id="zri_map">
+                <input type="radio" name="map_options"  autocomplete="off"> Rent Index (ZRI)
+            </label>
+        </div>
         <div id="map-view">
             <p>
                 <label for="slider_states"

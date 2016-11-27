@@ -24,6 +24,7 @@ function MapView(bubbleChart, houseChart, rentChart, detailCards) {
 MapView.prototype.init = function() {
     var self = this;
     self.selectedYear = 1996;
+    self.selectedData = "zhvi";
 
     self.margin = {top: 10, right: 20, bottom: 30, left: 50};
     var divMapView = d3.select("#map-view");
@@ -78,7 +79,8 @@ MapView.prototype.init = function() {
 
     d3.select("#slider_states")
         .on("input", function() {
-                self.update(this.value);
+                self.selectedYear = this.value;
+                self.update();
             }
         );
 
@@ -102,10 +104,22 @@ MapView.prototype.init = function() {
     //     .domain(domain)
     //     .range(range);
 
+    d3.select("#zhvi_map")
+        .on("click", function() {
+                self.selectedData = "zhvi";
+                self.update();
+            }
+        );
+    d3.select("#zri_map")
+        .on("click", function() {
+                self.selectedData = "zri";
+                self.update();
+            }
+        );
 
 
 
-    self.update(self.selectedYear);
+    self.update();
 
 };
 
@@ -113,22 +127,39 @@ MapView.prototype.init = function() {
  * Creates an interactive map with housing data on each state, populates
  * the bubble chart, line charts and detail cards based on selection
  */
-MapView.prototype.update = function(selectedYear){
+MapView.prototype.update = function(){
     var self = this;
 
-    d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
+    //  Min/Max Years
+    var min_year = "1996";
+    var data_file = "data/State_Zhvi_AllHomes.csv";
+
+    //  Change variables for ZRI (Rent)
+    if(self.selectedData == "zri")
+    {
+        data_file = "data/State_Zri_AllHomes_Simple.csv";
+        min_year = "2010";
+        if(self.selectedYear < min_year)
+            self.selectedYear = min_year;
+    }
+
+    d3.csv(data_file, function(error, data) {
 
         //  Get the min and max values for the given year
         var min_value = -1;
         var max_value = -1;
 
+
+
         data.forEach(function(d){
-            var value = Number(d[selectedYear]);
+            var value = Number(d[self.selectedYear]);
             if(min_value == -1 || (value < min_value && value != ""))
                 min_value = value;
             if(max_value == -1 || (value > max_value && value != ""))
                 max_value = value;
         });
+
+
 
         //  Color Legend References:
         //  http://d3-legend.susielu.com/
@@ -147,8 +178,11 @@ MapView.prototype.update = function(selectedYear){
             .range(["rgb(46, 73, 123)", "rgb(71, 187, 94)"]);
 
         //  Updates the slider to selected year
-        d3.select("#year_states").text(selectedYear);
-        d3.select("#slider_states").property("value", selectedYear);
+        d3.select("#year_states").text(self.selectedYear);
+        d3.select("#slider_states")
+            .property("value",self.selectedYear)
+            .attr("min",min_year)
+            // .attr("max",max_value);
 
         var legendQuantile = d3.legendColor()
             .shapeWidth((self.svgWidth-70)/5)
@@ -171,7 +205,7 @@ MapView.prototype.update = function(selectedYear){
                 });
 
                 try{
-                    return linear(state[0][selectedYear])
+                    return linear(state[0][self.selectedYear])
                 }
                 catch(err)
                 {
