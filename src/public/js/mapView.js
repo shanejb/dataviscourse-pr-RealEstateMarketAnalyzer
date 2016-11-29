@@ -245,7 +245,10 @@ MapView.prototype.selectState = function(state) {
 
     // TODO: populate rent chart
 
+
     // TODO: populate detail cards
+
+    self.detailCards.update(self.selectedStates);
 }
 
 
