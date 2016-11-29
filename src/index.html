@@ -9,9 +9,10 @@
     <!--Added for map legend-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
     <!--Added for bootstrap-->
-    <!--<link href="lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">-->
-    <!--<script src="lib/jquery-3.1.1.min.js"></script>-->
-    <!--<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
+    <link href="lib/bootstrap-4.0.0-alpha.5-dist/css/bootstrap.css" rel="stylesheet">
+    <script src="lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-4.0.0-alpha.5-dist/tether.min.js"></script>
+    <script src="lib/bootstrap-4.0.0-alpha.5-dist/js/bootstrap.min.js"></script>
 
     <!--<script src="bootstrap-switch.js"></script>-->
     <!--<script src="https://d3js.org/d3.v4.js"></script>-->
@@ -23,16 +24,37 @@
 <body>
 <header>
     <h1>Real Estate Market Analyzer</h1>
+
+
+    <nav class="navbar navbar-dark bg-inverse">
+        <a class="navbar-brand" href="#">About</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Analyzer<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Process Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Demo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/shanejb/dataviscourse-pr-RealEstateMarketAnalyzer" target="_blank">GitHub Repository</a>
+            </li>
+        </ul>
+    </nav>
+
+
 </header>
 
 <section class="map-container">
     <article class="pull-left">
         <h2>United States Map</h2>
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active" id="zhvi_map">
+            <label class="btn rema-btn active" id="zhvi_map">
                 <input type="radio" name="map_options"  autocomplete="off" checked> Home Index (ZHVI)
             </label>
-            <label class="btn btn-primary" id="zri_map">
+            <label class="btn rema-btn" id="zri_map">
                 <input type="radio" name="map_options"  autocomplete="off"> Rent Index (ZRI)
             </label>
         </div>

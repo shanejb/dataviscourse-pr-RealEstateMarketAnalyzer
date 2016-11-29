@@ -133,3 +133,34 @@ circle {
 .pull-right {
     float: right;
 }
+
+.rema-btn {
+    color: #fff;
+    background-color: #373A3C;
+    border-color: #818587;
+}
+
+.rema-btn:hover {
+    color: #fff;
+    background-color: #848789;
+    border-color: #C0C4C6;
+}
+
+.rema-btn:active, .rema-btn.active,
+.open > .rema-btn.dropdown-toggle {
+    color: #fff;
+    background-color: #5D6163;
+    border-color: #C0C4C6;
+    background-image: none;
+}
+
+
+.rema-btn:active:hover, .rema-btn:active:focus, .rema-btn:active.focus, .rema-btn.active:hover, .rema-btn.active:focus, .rema-btn.active.focus,
+.open > .rema-btn.dropdown-toggle:hover,
+.open > .rema-btn.dropdown-toggle:focus,
+.open > .rema-btn.dropdown-toggle.focus {
+    color: #fff;
+    background-color: #848789;
+    border-color: #C0C4C6;
+}
+
