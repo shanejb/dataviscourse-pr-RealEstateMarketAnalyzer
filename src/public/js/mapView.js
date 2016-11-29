@@ -48,13 +48,12 @@ MapView.prototype.init = function() {
         .projection(projection);  // tell path generator to use albersUsa projection
 
 
-    // //  Prototype to put clicked states in front of neighboring states
-    // //  http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
-    // d3.selection.prototype.moveToFront = function() {
-    //     return this.each(function(){
-    //         this.parentNode.appendChild(this);
-    //     });
-    // };
+    d3.select("#slider_states")
+        .on("input", function() {
+                self.selectedYear = this.value;
+                self.update();
+            }
+        );
 
     // Load GeoJSON data and merge with states data
     d3.json("data/us_states.json", function(json) {
@@ -75,6 +74,8 @@ MapView.prototype.init = function() {
             })
             .attr("d", path);
 
+        self.update();
+
     });
 
     d3.select("#slider_states")
@@ -84,7 +85,6 @@ MapView.prototype.init = function() {
             }
         );
 
-
     var legendHeight = 150;
     var legend = d3.select("#legend").classed("content",true);
     self.legendSvg = legend.append("svg")
@@ -93,9 +93,7 @@ MapView.prototype.init = function() {
         .attr("transform", "translate(" + self.margin.left + ",0)")
         .style("bgcolor","green");
 
-
-
-
+    //  Add onclick button calls to update map
     d3.select("#zhvi_map")
         .on("click", function() {
                 self.selectedData = "zhvi";
@@ -108,11 +106,6 @@ MapView.prototype.init = function() {
                 self.update();
             }
         );
-
-
-
-    self.update();
-
 };
 
 /**
