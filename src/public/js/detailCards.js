@@ -23,6 +23,8 @@ DetailCards.prototype.update = function (selectedStates) {
 
     var cards = d3.select("#detail-cards");
 
+    //console.log(selectedStates)
+
     //  Remove existing cards, this will prevent duplicate state cards from appearing
     cards.selectAll("div").remove();
 

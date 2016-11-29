@@ -95,14 +95,6 @@ MapView.prototype.init = function() {
 
 
 
-    // //Domain definition for global color scale
-    // var domain = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60];
-    // //Color range for global color scale
-    // var range = ["#063e78", "#08519c", "#3182bd", "#6baed6", "#9ecae1", "#c6dbef", "#fcbba1", "#fc9272", "#fb6a4a", "#de2d26", "#a50f15", "#860308"];
-    // //Global colorScale be used consistently by all the charts
-    // self.colorScale = d3.scaleQuantile()
-    //     .domain(domain)
-    //     .range(range);
 
     d3.select("#zhvi_map")
         .on("click", function() {
@@ -232,22 +224,43 @@ MapView.prototype.selectState = function(state) {
             this.parentNode.appendChild(this);
         });
     };
-    d3.select(state).moveToFront();
 
-    //  Update state attributes
-    self.svg.select("#"+stateId)
-       .classed("states selected_states", true);
+    //  Checks to make sure a state is not already included in the list
+    if(self.selectedStates.includes(stateId) == false) {
 
+        //  Creates smooth outline of states when selected
+        d3.select(state).moveToFront();
+
+        self.selectedStates.push(stateId);
+
+        //  Update state attributes
+        self.svg.select("#"+stateId)
+            .classed("states selected_states", true);
+    }
+    else {
+        //  State was selected and then clicked on, this will unselect the state
+
+        //  Remove from selected states list
+        var i = self.selectedStates.indexOf(stateId);
+        console.log(i);
+        self.selectedStates.splice(i,1);
+
+        //  Un-highlight state outline
+        self.svg.select("#"+stateId)
+            .attr("class","states");
+
+        //  Ensures smooth outline of selected states
+        self.selectedStates.forEach(function(d){
+            self.svg.select("#"+d).moveToFront();
+        });
+    }
 
     // Populate house chart
-    self.selectedStates.push(stateId);
     self.houseChart.update(self.selectedStates);
 
     // TODO: populate rent chart
 
-
-    // TODO: populate detail cards
-
+    // populate detail cards
     self.detailCards.update(self.selectedStates);
 }
 
