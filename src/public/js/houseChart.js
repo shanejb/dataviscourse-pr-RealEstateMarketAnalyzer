@@ -19,7 +19,7 @@ HouseChart.prototype.init = function () {
     self.xAxisWidth = 100;
     self.yAxisHeight = 50;
     self.svgWidth = self.svgBounds.width - self.margin.left - self.margin.right;
-    self.svgHeight = 400 - self.margin.top - self.margin.bottom;
+    self.svgHeight = 450 - self.margin.top - self.margin.bottom;
 
     // Creates svg element within the div
     self.svg = divHouseChart.append("svg")
@@ -32,6 +32,8 @@ HouseChart.prototype.init = function () {
     self.svg.append("g").attr("id", "xAxis");
     self.svg.append("g").attr("id", "yAxis");
     self.svg.append("g").attr("id", "lines");
+
+    self.message = d3.select("#hvi-message");
 };
 
 /**
@@ -46,8 +48,16 @@ HouseChart.prototype.update = function (selectedStates) {
     // self.svg.append("g").attr("id", "line");
 
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
-        var selectedState = data[0];
+        // var selectedState = data[0];
         //console.log(selectedState);
+        // Display alert messages
+        if (selectedStates.length == 0) {
+            self.message.text("You have not selected any states from the map.");
+        } else if (selectedStates.indexOf("LA") > -1) {
+            self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
+        } else {
+            self.message.text("");
+        }
 
         // Generate years domain for x axis - this never change
         self.yearsDomain = [];
@@ -61,6 +71,7 @@ HouseChart.prototype.update = function (selectedStates) {
 
         // Reformat selected states data
         for (var abbr in selectedStates) {
+
             // Get state data
             var state = data.filter(function (d) {
                 return d.abbr == selectedStates[abbr]
