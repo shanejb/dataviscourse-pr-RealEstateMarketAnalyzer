@@ -307,7 +307,8 @@ MapView.prototype.selectState = function(state) {
     // Populate house chart
     self.houseChart.update(self.selectedStates);
 
-    // TODO: populate rent chart
+    // Populate rent chart
+    self.rentChart.update(self.selectedStates);
 
     // populate detail cards
     self.detailCards.update(self.selectedStates);
