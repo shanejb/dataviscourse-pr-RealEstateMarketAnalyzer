@@ -67,12 +67,27 @@ MapView.prototype.init = function() {
             .attr("id", function (d) {
                 return d.properties.abbr;
             })
+            .attr("name",function(d){return d.properties.name})
             .classed("states", true)
             .on("click", function(d) {
                 // d3.select(this).moveToFront();
                 self.selectState(this);
             })
             .attr("d", path);
+            // .on("mouseover", function(d) {
+            //     div.transition()
+            //         .duration(200)
+            //         .style("opacity", .9)
+            //         .text(d.properties.name)
+            //         .style("left", (d3.event.pageX) + "px")
+            //         .style("top", (d3.event.pageY - 28) + "px");
+            // })
+            // .on("mouseout", function() {
+            //     div.transition()
+            //         .duration(500)
+            //         .style("opacity", 0);
+            // });
+
 
         self.update();
 
@@ -106,6 +121,12 @@ MapView.prototype.init = function() {
                 self.update();
             }
         );
+
+    //http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
+    // Define the div for the tooltip
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 };
 
 /**
@@ -196,7 +217,42 @@ MapView.prototype.update = function(){
                 {
                     //  Does nothing in the event that the state doesn't have data for the given year
                 }
+            })
+            .attr("value",function(d){
+                var id = this.id;
+
+                try {
+                    var state = data.filter(function (d) {
+                        return d.abbr == id
+                    });
+                    var value = state[0][self.selectedYear];
+                    if(value.length < 1)
+                        return "No Data";
+                    else
+                        return "$"+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+                catch(err){return "No Data";}
             });
+
+
+        //  Add ToolTip to Mouse over/out events over the map
+        var div = d3.select(".tooltip");
+        d3.selectAll(".states")
+            .on("mouseover", function() {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+
+                div.html(d3.select(d3.event.target).attr("name") + "<br/>" + d3.select(d3.event.target).attr("value"))
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function() {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
     });
 };
 
