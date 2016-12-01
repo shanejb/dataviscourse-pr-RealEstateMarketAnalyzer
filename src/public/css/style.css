@@ -107,18 +107,18 @@ circle {
     /*justify-content: space-between;*/
 }
 
-.card{
-    width: 300px;
-    height: 300px;
-    margin: 20px;
-    /*margin: auto;*/
-    background-color: #ffffff;
-    -webkit-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
-    -moz-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
-    box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);
-    border: 1px solid #e5e5e5;
-    padding: 0 20px;
-}
+/*.card{*/
+    /*width: 300px;*/
+    /*height: 300px;*/
+    /*margin: 20px;*/
+    /*!*margin: auto;*!*/
+    /*background-color: #ffffff;*/
+    /*-webkit-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+    /*-moz-box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+    /*box-shadow: 1px 7px 22px -4px rgba(173,173,173,1);*/
+    /*border: 1px solid #e5e5e5;*/
+    /*padding: 0 20px;*/
+/*}*/
 
 .card-title {
     color: steelblue;
