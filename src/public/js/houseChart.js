@@ -34,7 +34,11 @@ HouseChart.prototype.init = function () {
     self.svg.append("g").attr("id", "yAxis_house");
     self.svg.append("g").attr("id", "lines");
 
-    self.message = d3.select("#hvi-message");
+    self.message = self.svg.append("text")
+        .attr("id", "hvi-message")
+        .attr("x", 0)
+        .attr("y", 30)
+        .text("To get started, please select one or more states from the map on the left.");
 };
 
 /**
@@ -56,10 +60,14 @@ HouseChart.prototype.update = function (selectedStates) {
         // Display alert messages
         if (selectedStates.length == 0) {
             self.message.text("You have not selected any states from the map.");
+            d3.select("#xAxis_house").style("visibility", "hidden");
+            d3.select("#yAxis_house").style("visibility", "hidden");
         } else if (selectedStates.indexOf("LA") > -1) {
             self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
         } else {
             self.message.text("");
+            d3.select("#xAxis_house").style("visibility", "visible");
+            d3.select("#yAxis_house").style("visibility", "visible");
         }
 
         // Generate years domain for x axis - this never change

@@ -29,6 +29,12 @@ RentChart.prototype.init = function () {
     self.svg.append("g").attr("id", "xAxis");
     self.svg.append("g").attr("id", "yAxis");
     self.svg.append("g").attr("id", "lines");
+
+    self.message = self.svg.append("text")
+        .attr("id", "hri-message")
+        .attr("x", 0)
+        .attr("y", 30)
+        .text("To get started, please select one or more states from the map on the left.");
 };
 
 /**
@@ -45,6 +51,18 @@ RentChart.prototype.update = function (selectedStates) {
     d3.csv("data/State_Zri_AllHomes.csv", function(error, data) {
         // var selectedState = data[0];
         //console.log(selectedState);
+
+        if (selectedStates.length == 0) {
+            self.message.text("You have not selected any states from the map.");
+            d3.select("#xAxis").style("visibility", "hidden");
+            d3.select("#yAxis").style("visibility", "hidden");
+        } else if (selectedStates.indexOf("LA") > -1) {
+            self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
+        } else {
+            self.message.text("");
+            d3.select("#xAxis").style("visibility", "visible");
+            d3.select("#yAxis").style("visibility", "visible");
+        }
 
         // Generate years domain for x axis - this never change
         self.datesDomain = [];
