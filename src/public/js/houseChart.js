@@ -47,6 +47,8 @@ HouseChart.prototype.update = function (selectedStates) {
     // selectedStates = ['CA', 'UT', 'NY', 'ND']; // For testing purposes
 
     // self.svg.append("g").attr("id", "line");
+    // For animation
+    var giveMeEmpty = d3.line().x(0).y(0);
 
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
         // var selectedState = data[0];
@@ -113,7 +115,7 @@ HouseChart.prototype.update = function (selectedStates) {
         // define the line
         self.valueLine = d3.line()
             .x(function (d) {
-                return self.xScale(d.year) + 17;
+                return self.xScale(d.year) + 15;
             })
             .y(function (d) {
                 return self.yScale(d.price);
@@ -130,22 +132,65 @@ HouseChart.prototype.update = function (selectedStates) {
         //     .classed("line", true)
         //     .attr("d", self.valueLine);
 
-        var lines = self.svg.select("#lines").selectAll("g").data(self.formattedData);
-        lines.exit().remove();
+        // First create a group for each line
+        var lines = self.svg.select("#lines")
+            .selectAll("g")
+            .data(self.formattedData, function (d) {
+                return d.abbr;
+            });
+        lines.exit()
+            .style("opacity", 1)
+            .transition()
+            .duration(500)
+            // .ease(d3.easeLinear)
+            .style("opacity", 0)
+            .remove();
         var linesEnter = lines.enter()
             .append("g")
             .attr("id", function (d) {
+                console.log("appended g using:");
+                console.log(d);
                 return d.abbr;
             });
         linesEnter.append("text");
+        linesEnter.append("path")
+            .attr("d", function (d) {
+                return giveMeEmpty(d.series);
+            })
+            .transition() // Animation
+            .duration(1000)
+            // .ease(d3.easeLinear)
+            .attrTween("d", function (d) {
+                console.log("debugging:");
+                console.log(d.series);
+                return getInterpolation(d.series);
+            });
         lines = lines.merge(linesEnter);
 
-        lines.selectAll("path").remove(); // Inefficient but temporary fix to remove extra lines leftover.
+        // Required for fancy animation
+        var getInterpolation = function (indexSeries) {
+            var start = 1;
+            for (var i = 0; i < indexSeries.length; i++) {
+                if (indexSeries[i].price == 0) {
+                    start++;
+                }
+            }
 
+            var interpolate = d3.scaleQuantile()
+                .domain([0,1])
+                .range(d3.range(start, indexSeries.length + 1));
+            // the range uses (18 - indexSeries.length) as the starting point, 18 is the number of dates
+
+            return function(t) {
+                var interpolatedLine = indexSeries.slice(0, interpolate(t));
+                return self.valueLine(interpolatedLine);
+            }
+        };
+
+        // Draw lines
         lines
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
-            .append("path")
-            .data(self.formattedData)
+            .select("path")
             .classed("line", true)
             .attr("d", function (d) {
                 return self.valueLine(d.series);
@@ -168,32 +213,31 @@ HouseChart.prototype.update = function (selectedStates) {
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .call(d3.axisLeft(self.yScale));
 
-        // Draw dots
-        // self.svg.selectAll("dot")
-        //     .data(self.formatData.series)
-        //     .enter()
-        //     .append("circle")
-        //     .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
-        //     .attr("r", 3)
-        //     .attr("cx", function (d) {
-        //         return self.xScale(d.year) + 12;
-        //     })
-        //     .attr("cy", function (d) {
-        //         return self.yScale(d.price);
-        //     })
-        //     .attr("style", "border: 2px solid #fff;");
-
-        lines.selectAll("circle").remove(); // Inefficient but temporary fix to remove extra lines leftover.
-
-        lines.selectAll("circle")
+        var dots = lines.selectAll("circle")
             .data(function (d) {
                 return d.series;
-            })
+            });
+        dots.exit().remove();
+        var dotsEnter = dots
             .enter()
             .append("circle")
+            .attr("cx", function (d) {
+                return self.xScale(d.year) + 15;
+            })
+            .attr("cy", function (d) {
+                return self.yScale(d.price);
+            })
+            .style("opacity", 0);
+        dots = dots.merge(dotsEnter);
+
+        dots
+            .transition()
+            .duration(500)
+            .ease(d3.easeLinear)
+            .style("opacity", 1)
             .attr("r", 3)
             .attr("cx", function (d) {
-                return self.xScale(d.year) + 17;
+                return self.xScale(d.year) + 15;
             })
             .attr("cy", function (d) {
                 return self.yScale(d.price);
@@ -205,15 +249,14 @@ HouseChart.prototype.update = function (selectedStates) {
             .attr("visibility", function (d) { // Temporary hack to hide empty values for scatterplot
                 return d.price == 0 ? 'hidden' : '';
             });
-        lines.select("text")
+
+        var lineLabels = lines.select("text")
             .text(function (d) {
                 return d.abbr;
             })
-            .attr("x", self.svgWidth - self.xAxisWidth - 10)
+            .attr("x", self.svgWidth - self.xAxisWidth - 9)
             .attr("y", function (d) {
-                // console.log("creating text");
-                // console.log(d);
-                return self.yScale(d.series[d.series.length - 1].price);
+                return self.yScale(d.series[d.series.length - 1].price) + 6;
             });
     });
 };

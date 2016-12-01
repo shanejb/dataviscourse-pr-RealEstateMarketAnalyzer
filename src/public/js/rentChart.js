@@ -150,10 +150,17 @@ RentChart.prototype.update = function (selectedStates) {
 
         // Required for fancy animation
         var getInterpolation = function (indexSeries) {
+            var start = 1;
+            for (var i = 0; i < indexSeries.length; i++) {
+                if (indexSeries[i].price == 0) {
+                    start++;
+                }
+            }
 
             var interpolate = d3.scaleQuantile()
                 .domain([0,1])
-                .range(d3.range(1, indexSeries.length + 1));
+                .range(d3.range(start, indexSeries.length + 1));
+            // the range uses (18 - indexSeries.length) as the starting point, 18 is the number of dates
 
             return function(t) {
                 var interpolatedLine = indexSeries.slice(0, interpolate(t));
