@@ -19,18 +19,19 @@ HouseChart.prototype.init = function () {
     self.xAxisWidth = 100;
     self.yAxisHeight = 50;
     self.svgWidth = self.svgBounds.width - self.margin.left - self.margin.right;
-    self.svgHeight = 450 - self.margin.top - self.margin.bottom;
+    self.svgHeight = 300 - self.margin.top - self.margin.bottom;
 
     // Creates svg element within the div
     self.svg = divHouseChart.append("svg")
         .attr("width", self.svgWidth)
-        .attr("height", self.svgHeight)
-        .on("click", function () {
-            self.update();
-        });
+        .attr("height", self.svgHeight);
+        //  Removed this on click, not sure of it's purpose [Shane]
+        // .on("click", function () {
+        //     self.update();
+        // });
 
-    self.svg.append("g").attr("id", "xAxis");
-    self.svg.append("g").attr("id", "yAxis");
+    self.svg.append("g").attr("id", "xAxis_house");
+    self.svg.append("g").attr("id", "yAxis_house");
     self.svg.append("g").attr("id", "lines");
 
     self.message = d3.select("#hvi-message");
@@ -71,7 +72,6 @@ HouseChart.prototype.update = function (selectedStates) {
 
         // Reformat selected states data
         for (var abbr in selectedStates) {
-
             // Get state data
             var state = data.filter(function (d) {
                 return d.abbr == selectedStates[abbr]
@@ -155,7 +155,7 @@ HouseChart.prototype.update = function (selectedStates) {
             });
 
         // Draw x axis
-        self.svg.select("#xAxis")
+        self.svg.select("#xAxis_house")
             .attr("transform", "translate(" + self.margin.left + "," + (self.svgHeight - self.yAxisHeight + self.margin.top) + ")")
             .call(d3.axisBottom(self.xScale))
             .selectAll('text')
@@ -164,7 +164,7 @@ HouseChart.prototype.update = function (selectedStates) {
             .attr("transform", "rotate(-45)");
 
         // Draw y axis
-        self.svg.select("#yAxis")
+        self.svg.select("#yAxis_house")
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
             .call(d3.axisLeft(self.yScale));
 

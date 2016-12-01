@@ -19,7 +19,7 @@ RentChart.prototype.init = function () {
     self.xAxisWidth = 100;
     self.yAxisHeight = 50;
     self.svgWidth = self.svgBounds.width - self.margin.left - self.margin.right;
-    self.svgHeight = 400 - self.margin.top - self.margin.bottom;
+    self.svgHeight = 300 - self.margin.top - self.margin.bottom;
 
     // Creates svg element within the div
     self.svg = divRentChart.append("svg")

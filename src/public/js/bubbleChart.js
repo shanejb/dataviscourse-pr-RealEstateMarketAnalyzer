@@ -25,8 +25,8 @@ BubbleChart.prototype.init = function () {
         .attr("width", self.svgWidth)
         .attr("height", self.svgHeight);
 
-    self.svg.append("g").attr("id", "xAxis");
-    self.svg.append("g").attr("id", "yAxis");
+    self.svg.append("g").attr("id", "xAxis_bubble");
+    self.svg.append("g").attr("id", "yAxis_bubble");
     self.svg.append("g").attr("id", "circles");
 
     d3.csv("data/State_Zhvi_AllHomes.csv", function(error, data) {
@@ -53,12 +53,12 @@ BubbleChart.prototype.init = function () {
             // Create the axes
             self.xAxis = d3.axisLeft()
                 .scale(self.xScale);
-            d3.select("#xAxis")
+            d3.select("#xAxis_bubble")
                 .attr("transform", "rotate(-90) translate(" + (self.yAxisHeight - self.svgHeight -1) + ",0)")
                 .call(self.xAxis);
             self.yAxis = d3.axisLeft()
                 .scale(self.yScale);
-            d3.select("#yAxis")
+            d3.select("#yAxis_bubble")
                 .attr("transform", "translate(" + self.yAxisHeight + ",0)")
                 .call(self.yAxis);
 

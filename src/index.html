@@ -6,108 +6,107 @@
     <link rel="stylesheet" href="public/css/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet">
     <link href="lib/bootstrap-4.0.0-alpha.5-dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="icon" href="home.png">
 
 </head>
 <body>
-<header>
-    <h1>Real Estate Market Analyzer</h1>
+<div id="wrapper">
+
+    <div id="header">
+        <h1>Real Estate Market Analyzer</h1>
+        <nav class="navbar navbar-dark bg-inverse">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="nav navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Analyzer<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="demo.html">Demo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="data.html">Data</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../docs/ProcessBook.pdf" target="_blank">Process Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/shanejb/dataviscourse-pr-RealEstateMarketAnalyzer" target="_blank">GitHub Repository</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <br>
+    <div id="body">
 
 
-    <nav class="navbar navbar-dark bg-inverse">
-        <a class="navbar-brand" href="#"></a>
-        <ul class="nav navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Analyzer<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Demo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../docs/ProcessBook.pdf" target="_blank">Process Book</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Data</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://github.com/shanejb/dataviscourse-pr-RealEstateMarketAnalyzer" target="_blank">GitHub Repository</a>
-            </li>
-        </ul>
-    </nav>
+        <section>
+            <!--<section class="map-container">-->
+            <article class="pull-left">
+                <h2 >United States Map</h2>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn rema-btn active" id="zhvi_map">
+                        <input type="radio" name="map_options"  autocomplete="off" checked> Home Value Index (ZHVI)
+                    </label>
+                    <label class="btn rema-btn" id="zri_map">
+                        <input type="radio" name="map_options"  autocomplete="off"> Rent Index (ZRI)
+                    </label>
+                </div>
+                <div id="map-view">
+                    <p>
+                        <label for="slider_states" style="display: inline-block; width: 100px; text-align: right">
+                            Year: <span id="year_states" style="width:1000px"></span>
+                        </label>
+                        <input type="range" min="1996" max="2016" id="slider_states">
+                    </p>
+                </div>
+                <div id="legend"></div>
+            </article>
+
+            <article class="pull-right">
+                <section>
+                    <!--<section class="line-charts-container">-->
+                    <h2>Home Value Chart</h2>
+                    <div id="house-chart">
+                    </div>
+
+                    <h2>Rent Chart</h2>
+                    <div id="rent-chart">
+                    </div>
+                </section>
+           </article>
+        </section>
+
+        <section>
+            <!--<section class="bubble-chart-container">-->
+            <h2>Home Value Time Series</h2>
+            <div id="bubble-chart">
+                    <!--<h2>Bubble Chart</h2>-->
+                <p>
+                    <label for="slider" style="display: inline-block; width: 100px; text-align: right">
+                            Year: <span id="year" style="width:1000px">…</span>
+                    </label>
+                    <input type="range" min="1996" max="2016" id="slider">
+                </p>
+            </div>
+        </section>
+
+        <hr>
+        <section>
+            <h2 align="center">States Insights</h2>
+            <div id="detail-cards" class="container"></div>
+        </section>
+    </div>
 
 
-</header>
-
-<section class="map-container">
-    <article class="pull-left">
-        <h2>United States Map</h2>
-        <div class="btn-group" data-toggle="buttons">
-            <label class="btn rema-btn active" id="zhvi_map">
-                <input type="radio" name="map_options"  autocomplete="off" checked> Home Value Index (ZHVI)
-            </label>
-            <label class="btn rema-btn" id="zri_map">
-                <input type="radio" name="map_options"  autocomplete="off"> Rent Index (ZRI)
-            </label>
+    <div id="footer">
+        <hr>
+        <div align="center">
+            <p>&copy; 2016 Real Estate Market Analyzer</p>
         </div>
-        <div id="map-view">
-            <p>
-                <label for="slider_states"
-                       style="display: inline-block; width: 100px; text-align: right">
-                    Year: <span id="year_states" style="width:1000px"></span>
-                </label>
-                <input type="range" min="1996" max="2016" id="slider_states">
-            </p>
-        </div>
-        <div id="legend"></div>
-    </article>
-
-    <article class="pull-right">
-        <h2>Home Value Time Series</h2>
-        <div id="bubble-chart">
-            <!--<h2>Bubble Chart</h2>-->
-            <p>
-                <label for="slider"
-                       style="display: inline-block; width: 100px; text-align: right">
-                    Year: <span id="year" style="width:1000px">…</span>
-                </label>
-                <input type="range" min="1996" max="2016" id="slider">
-            </p>
-            <!--<svg width="1000" height="400">-->
-                <!--<g id="xAxis"></g>-->
-                <!--<g id="yAxis"></g>-->
-                <!--<g id="circles"></g>-->
-            <!--</svg>-->
-        </div>
-    </article>
-</section>
-
-<section class="line-charts-container">
-    <article class="pull-left">
-        <h2>Home Value Chart</h2>
-        <p id="hvi-message">
-            You have not selected any states from the map.
-        </p>
-        <div id="house-chart">
-            <!--<img src="images/line_chart.gif"/>-->
-        </div>
-    </article>
-
-    <article class="pull-right">
-        <h2>Rent Chart</h2>
-        <div id="rent-chart">
-            <!--<img src="images/line_chart.gif"/>-->
-        </div>
-    </article>
-</section>
-
-<section>
-    <h2>States Insights</h2>
-    <div id="detail-cards" class="container"></div>
-</section>
-
+    </div>
 
 
 <!-- Load JavaScript at the end -->
-
 <script type="text/javascript" src="lib/node_modules/d3/build/d3.js"></script>
 <!--Added for map legend-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
@@ -124,5 +123,6 @@
 <script type="application/javascript" src="public/js/main.js"></script>
 
 
+</div>
 </body>
 </html>
