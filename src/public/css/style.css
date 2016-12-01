@@ -103,7 +103,7 @@ circle {
     flex-wrap: wrap;
     flex-flow: row wrap;  /*shorthand for flex-direction and flex-wrap*/
     align-items: flex-start;
-    height: 300px;
+    /*height: 300px;*/
     /*justify-content: space-between;*/
 }
 
