@@ -207,6 +207,80 @@ HouseChart.prototype.update = function (selectedStates) {
                 return self.zScale(d.abbr);
             });
 
+        // Handle hovering effect
+        lines
+            .on("mouseover", function (d) {
+                var selected = d3.select(this);         // on mouseover of each line, give it a nice thick stroke
+                selected.select(".line")
+                    .style("stroke-width", "5px");
+
+                // d3.selectAll(".line")
+                //     .style("opacity", function (d) {
+                //         return (d == selected.data()[0]) ? 0.8 : 0.2;
+                //     });
+
+                // Select other line groups and reduce the opacity
+                var selectOtherLines = lines
+                    .filter(function (d) {
+                        return d != selected.data()[0];
+                    });
+
+                selectOtherLines.select("path")
+                    .style("opacity", 0.2);
+
+                selectOtherLines.selectAll("circle")
+                    .style("opacity", 0.2);
+
+                selectOtherLines.select("text")
+                    .style("opacity", 0.2);
+
+                // Sort them so selected line is on top of other lines
+                lines.sort(function (a, b) {
+                    if (a != selected.data()[0]) {
+                        return -1;
+                    }
+                    return 1;
+                })
+            })
+            .on("mouseout", function (d) {
+                var selected = d3.select(this);
+                selected.select(".line")
+                    .style("stroke-width", "2px");
+
+                var selectOtherLines = lines
+                    .filter(function (d) {
+                        return d != selected.data()[0];
+                    });
+
+                selectOtherLines.select("path")
+                    .style("opacity", 0.8);
+
+                selectOtherLines.selectAll("circle")
+                    .style("opacity", 0.8);
+
+                selectOtherLines.select("text")
+                    .style("opacity", 0.8);
+            });
+
+        // Legend
+        // var legend = self.svg.selectAll(".legend")
+        //     .data(selectedStates, function (d) {
+        //         return d.attr;
+        //     });
+        // legend.exit().remove();
+        // var legendEnter = legend.enter()
+        //     .append("g")
+        //     .attr("class", "legend")
+        //     .attr("id", function (d) {
+        //         return d.name;
+        //     });
+        // legendEnter.append("circle")
+        //     .attr("cx", 100)
+        //     .attr("cy", function (d) {
+        //
+        //     });
+        // legend = legend.merge(legendEnter);
+
         // Draw x axis
         self.svg.select("#xAxis_house")
             .attr("transform", "translate(" + self.margin.left + "," + (self.svgHeight - self.yAxisHeight + self.margin.top) + ")")
