@@ -61,39 +61,29 @@
     </article>
 
     <article class="pull-right">
-        <h2>Home Value Time Series</h2>
-        <div id="bubble-chart">
-            <!--<h2>Bubble Chart</h2>-->
-            <p>
-                <label for="slider"
-                       style="display: inline-block; width: 100px; text-align: right">
-                    Year: <span id="year" style="width:1000px">…</span>
-                </label>
-                <input type="range" min="1996" max="2016" id="slider">
-            </p>
-            <!--<svg width="1000" height="400">-->
-                <!--<g id="xAxis"></g>-->
-                <!--<g id="yAxis"></g>-->
-                <!--<g id="circles"></g>-->
-            <!--</svg>-->
-        </div>
-    </article>
+        <section class="line-charts-container">
+            <h2>Home Value Chart</h2>
+            <div id="house-chart">
+            </div>
+
+            <h2>Rent Chart</h2>
+            <div id="rent-chart">
+            </div>
+        </section>
+   </article>
 </section>
 
-<section class="line-charts-container">
-    <article class="pull-left">
-        <h2>Home Value Chart</h2>
-        <div id="house-chart">
-            <!--<img src="images/line_chart.gif"/>-->
-        </div>
-    </article>
-
-    <article class="pull-right">
-        <h2>Rent Chart</h2>
-        <div id="rent-chart">
-            <!--<img src="images/line_chart.gif"/>-->
-        </div>
-    </article>
+<section class="bubble-chart-container">
+    <h2>Home Value Time Series</h2>
+    <div id="bubble-chart">
+            <!--<h2>Bubble Chart</h2>-->
+        <p>
+            <label for="slider" style="display: inline-block; width: 100px; text-align: right">
+                    Year: <span id="year" style="width:1000px">…</span>
+            </label>
+            <input type="range" min="1996" max="2016" id="slider">
+        </p>
+    </div>
 </section>
 
 <section>
@@ -104,7 +94,6 @@
 
 
 <!-- Load JavaScript at the end -->
-
 <script type="text/javascript" src="lib/node_modules/d3/build/d3.js"></script>
 <!--Added for map legend-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
