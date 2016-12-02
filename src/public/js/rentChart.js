@@ -11,15 +11,15 @@ function RentChart() {
  */
 RentChart.prototype.init = function () {
     var self = this;
-    self.margin = {top: 10, right: 20, bottom: 30, left: 50};
+    self.margin = {top: 10, right: 20, bottom: 30, left: 65};
     var divRentChart = d3.select("#rent-chart");
 
     // Get access to the div element created for this chart from HTML
     self.svgBounds = divRentChart.node().getBoundingClientRect();
     self.xAxisWidth = 100;
-    self.yAxisHeight = 50;
+    self.yAxisHeight = 55;
     self.svgWidth = self.svgBounds.width - self.margin.left - self.margin.right;
-    self.svgHeight = 300 - self.margin.top - self.margin.bottom;
+    self.svgHeight = 310 - self.margin.top - self.margin.bottom;
 
     // Creates svg element within the div
     self.svg = divRentChart.append("svg")
@@ -29,6 +29,29 @@ RentChart.prototype.init = function () {
     self.svg.append("g").attr("id", "xAxis");
     self.svg.append("g").attr("id", "yAxis");
     self.svg.append("g").attr("id", "lines");
+    self.svg.append("g").attr("id", "axis-labels");
+
+    // x axis label
+    self.svg.select("#axis-labels")
+        .style("visibility", "hidden");
+    self.svg.select("#axis-labels")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", (self.svgWidth / 2))
+        .attr("y", self.svgHeight)
+        .text("Months")
+        .style("font-size", "12px");
+
+    // y axis label
+    self.svg.select("#axis-labels")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", (self.svgHeight - self.yAxisHeight) / 2 * -1)
+        .attr("y", 10)
+        // .attr("dy", "0.55em")
+        .attr("transform", "rotate(-90)")
+        .text("Price ($)")
+        .style("font-size", "12px");
 
     self.message = self.svg.append("text")
         .attr("id", "hri-message")
@@ -54,15 +77,17 @@ RentChart.prototype.update = function (selectedStates) {
 
         if (selectedStates.length == 0) {
             self.message.text("You have not selected any states from the map.");
-            d3.select("#xAxis").style("visibility", "hidden");
-            d3.select("#yAxis").style("visibility", "hidden");
+            self.svg.select("#xAxis").style("visibility", "hidden");
+            self.svg.select("#yAxis").style("visibility", "hidden");
+            self.svg.select("#axis-labels").style("visibility", "hidden");
         } else if (selectedStates.indexOf("LA") > -1) {
             //  Do nothing for LA
             //self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
         } else {
             self.message.text("");
-            d3.select("#xAxis").style("visibility", "visible");
-            d3.select("#yAxis").style("visibility", "visible");
+            self.svg.select("#xAxis").style("visibility", "visible");
+            self.svg.select("#yAxis").style("visibility", "visible");
+            self.svg.select("#axis-labels").style("visibility", "visible");
         }
 
         // Generate years domain for x axis - this never change
@@ -315,7 +340,7 @@ RentChart.prototype.update = function (selectedStates) {
             .text(function (d) {
                 return d.abbr;
             })
-            .attr("x", self.svgWidth - self.xAxisWidth - 10)
+            .attr("x", self.svgWidth - self.xAxisWidth - 7)
             .attr("y", function (d) {
                 return self.yScale(d.series[d.series.length - 1].price) + 6;
             });

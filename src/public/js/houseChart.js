@@ -11,28 +11,48 @@ function HouseChart() {
  */
 HouseChart.prototype.init = function () {
     var self = this;
-    self.margin = {top: 10, right: 20, bottom: 30, left: 50};
+    self.margin = {top: 10, right: 20, bottom: 30, left: 65};
     var divHouseChart = d3.select("#house-chart");
 
     // Get access to the div element created for this chart from HTML
     self.svgBounds = divHouseChart.node().getBoundingClientRect();
     self.xAxisWidth = 100;
-    self.yAxisHeight = 50;
+    self.yAxisHeight = 55;
     self.svgWidth = self.svgBounds.width - self.margin.left - self.margin.right;
-    self.svgHeight = 300 - self.margin.top - self.margin.bottom;
+    // self.svgWidth = self.svgBounds.width;
+    self.svgHeight = 310 - self.margin.top - self.margin.bottom;
 
     // Creates svg element within the div
     self.svg = divHouseChart.append("svg")
         .attr("width", self.svgWidth)
         .attr("height", self.svgHeight);
-        //  Removed this on click, not sure of it's purpose [Shane]
-        // .on("click", function () {
-        //     self.update();
-        // });
 
     self.svg.append("g").attr("id", "xAxis_house");
     self.svg.append("g").attr("id", "yAxis_house");
     self.svg.append("g").attr("id", "lines");
+    self.svg.append("g").attr("id", "axis-labels");
+
+    // x axis label
+    self.svg.select("#axis-labels")
+        .style("visibility", "hidden");
+    self.svg.select("#axis-labels")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", (self.svgWidth / 2))
+        .attr("y", self.svgHeight)
+        .text("Years")
+        .style("font-size", "12px");
+
+    // y axis label
+    self.svg.select("#axis-labels")
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", (self.svgHeight - self.yAxisHeight) / 2 * -1)
+        .attr("y", 10)
+        // .attr("dy", "0.55em")
+        .attr("transform", "rotate(-90)")
+        .text("Price ($)")
+        .style("font-size", "12px");
 
     self.message = self.svg.append("text")
         .attr("id", "hvi-message")
@@ -60,15 +80,17 @@ HouseChart.prototype.update = function (selectedStates) {
         // Display alert messages
         if (selectedStates.length == 0) {
             self.message.text("You have not selected any states from the map.");
-            d3.select("#xAxis_house").style("visibility", "hidden");
-            d3.select("#yAxis_house").style("visibility", "hidden");
+            self.svg.select("#xAxis_house").style("visibility", "hidden");
+            self.svg.select("#yAxis_house").style("visibility", "hidden");
+            self.svg.select("#axis-labels").style("visibility", "hidden");
         } else if (selectedStates.indexOf("LA") > -1) {
             //  Do nothing for LA
             //  self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
         } else {
             self.message.text("");
-            d3.select("#xAxis_house").style("visibility", "visible");
-            d3.select("#yAxis_house").style("visibility", "visible");
+            self.svg.select("#xAxis_house").style("visibility", "visible");
+            self.svg.select("#yAxis_house").style("visibility", "visible");
+            self.svg.select("#axis-labels").style("visibility", "visible");
         }
 
         // Generate years domain for x axis - this never change
@@ -343,7 +365,7 @@ HouseChart.prototype.update = function (selectedStates) {
             .text(function (d) {
                 return d.abbr;
             })
-            .attr("x", self.svgWidth - self.xAxisWidth - 9)
+            .attr("x", self.svgWidth - self.xAxisWidth - 7)
             .attr("y", function (d) {
                 return self.yScale(d.series[d.series.length - 1].price) + 6;
             });
