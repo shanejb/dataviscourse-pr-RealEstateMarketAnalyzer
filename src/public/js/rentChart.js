@@ -70,6 +70,7 @@ RentChart.prototype.update = function (selectedStates) {
 
     // For animation
     var giveMeEmpty = d3.line().x(0).y(0);
+    var toolTip = d3.select(".tooltip");
 
     d3.csv("data/State_Zri_AllHomes.csv", function(error, data) {
         // var selectedState = data[0];
@@ -317,6 +318,21 @@ RentChart.prototype.update = function (selectedStates) {
         dots = dots.merge(dotsEnter);
 
         dots
+            .on("mouseover", function (d) { // Handle tooltip here as well
+                var parent = d3.select(d3.event.target.parentNode).data();
+                toolTip
+                    .html(parent[0].RegionName + "<br>" + d3.format("$,.4r")(d.price) + "<br>" + d.date)
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY - 50) + "px")
+                    .transition()
+                    .duration(400)
+                    .style("opacity", .9);
+            })
+            .on("mouseout", function () {
+                toolTip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
             .transition()
             .duration(500)
             .ease(d3.easeLinear)
