@@ -326,6 +326,9 @@ HouseChart.prototype.update = function (selectedStates, selectedYear) {
         // Draw y axis
         self.svg.select("#yAxis_house")
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
+            .transition()
+            .duration(400)
+            .ease(d3.easeLinear)
             .call(d3.axisLeft(self.yScale));
 
         var dots = lines.selectAll("circle")

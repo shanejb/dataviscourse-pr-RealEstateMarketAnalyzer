@@ -298,6 +298,9 @@ RentChart.prototype.update = function (selectedStates) {
         // Draw y axis
         self.svg.select("#yAxis")
             .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")")
+            .transition()
+            .duration(400)
+            .ease(d3.easeLinear)
             .call(d3.axisLeft(self.yScale));
 
         var dots = lines.selectAll("circle")
