@@ -44,7 +44,7 @@ BubbleChart.prototype.init = function () {
                 .domain([0, self.maxValue]).range([self.svgHeight - self.yAxisHeight,10]);
             self.rScale = d3.scaleLinear()
                 .domain([1,50])
-                .range([15,1]);
+                .range([30,1]);
            // self.colorScale = d3.scaleLinear()
              //   .domain([1, 10])
              //   .range(["#800026","#bd0026","#e31a1c","fc4e2a","fd8d3c"]);
@@ -71,7 +71,7 @@ BubbleChart.prototype.init = function () {
                 .attr("text-anchor", "end")
                 .attr("x", self.svgWidth)
                 .attr("y", self.svgHeight - 25)
-                .text("State Size Rank");
+                .text("State Size Rank (by Population)");
             self.svg.append("text")
             //  .attr("class", "")
                 .attr("text-anchor", "end")
@@ -80,24 +80,62 @@ BubbleChart.prototype.init = function () {
                 .attr("transform", "rotate(-90)")
                 .text("ZHVI house cost ($)");
 
-        var selectedYear = 2016;
             // Draw bubble chart for the first time
-            //Start off with year 2016 selected
+            //Start off with year 1996 selected
             self.circles = d3.select("#circles").selectAll(".circle")
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
                 .attr("cx", function(d) { return self.xScale(d.SizeRank) + 14})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
-                .attr("cy", function(d) { return self.yScale(d[selectedYear]); })
+                .attr("cy", function(d) { return self.yScale(d["1996"]); })
             //  .style("fill", function(d) { return self.colorScale(d.SizeRank)});
                 .attr("name", function(d) { return d.RegionName; })
-                .style("fill", "#00688B");
-           d3.select("#slider").on("input", function() {
-               self.update(+this.value);
+                .style("fill", "#00688B")
+                .on("mouseover", function(d) {
+                    d3.select('.selected').classed('selected', false);
+                    d3.select(this).classed('selected', true);
+                });
+
+
+            function tabulate(data, columns) {
+                var table = d3.select("#table").append("table")
+                        .attr("style", "margin-left: 250px"),
+                    thead = table.append("thead"),
+                    tbody = table.append("tbody");
+
+                // append the header row
+                thead.append("tr")
+                    .selectAll("th")
+                    .data(columns)
+                    .enter()
+                    .append("th")
+                    .text(function(column) { return column; });
+
+                // create a row for each object in the data
+                var rows = tbody.selectAll("tr")
+                    .data(data)
+                    .enter()
+                    .append("tr");
+
+                // create a cell in each row for each column
+                var cells = rows.selectAll("td")
+                    .data(function(row) {
+                        return columns.map(function(column) {
+                            return {column: column, value: row[column]};
+                        });
+                    })
+                    .enter()
+                    .append("td")
+                    .attr("style", "font-family: Courier") // sets the font style
+                    .html(function(d) { return d.value; });
+
+                return table;
             }
-             );
-           self.update(selectedYear);
+            d3.select("#slider").on("input", function() {
+               self.update(+this.value);
+            });
+           self.update(1996);
     }
     )};
 
@@ -139,7 +177,7 @@ BubbleChart.prototype.update = function (selectedYear) {
        .on("mouseover", function() {
            div.transition()
                .duration(200)
-               .style("opacity", .9);
+               .style("opacity", 2);
            div.html(d3.select(d3.event.target).attr("name") + "<br/>" + d3.select(d3.event.target).attr("value"))
                .style("left", (d3.event.pageX) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
@@ -149,4 +187,5 @@ BubbleChart.prototype.update = function (selectedYear) {
                .duration(500)
                .style("opacity", 0);
        });
+
   };
