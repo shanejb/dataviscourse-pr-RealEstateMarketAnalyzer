@@ -44,7 +44,7 @@ BubbleChart.prototype.init = function () {
                 .domain([0, self.maxValue]).range([self.svgHeight - self.yAxisHeight,10]);
             self.rScale = d3.scaleLinear()
                 .domain([1,50])
-                .range([30,1]);
+                .range([25,1]);
            // self.colorScale = d3.scaleLinear()
              //   .domain([1, 10])
              //   .range(["#800026","#bd0026","#e31a1c","fc4e2a","fd8d3c"]);
@@ -86,7 +86,7 @@ BubbleChart.prototype.init = function () {
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
-                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 14})
+                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 14.3})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
                 .attr("cy", function(d) { return self.yScale(d["1996"]); })
             //  .style("fill", function(d) { return self.colorScale(d.SizeRank)});
