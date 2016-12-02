@@ -57,7 +57,8 @@ RentChart.prototype.update = function (selectedStates) {
             d3.select("#xAxis").style("visibility", "hidden");
             d3.select("#yAxis").style("visibility", "hidden");
         } else if (selectedStates.indexOf("LA") > -1) {
-            self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
+            //  Do nothing for LA
+            //self.message.text("We currently do not have data for Louisiana state. Please try some other states.");
         } else {
             self.message.text("");
             d3.select("#xAxis").style("visibility", "visible");

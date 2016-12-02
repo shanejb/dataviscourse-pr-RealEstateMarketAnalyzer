@@ -265,6 +265,14 @@ MapView.prototype.selectState = function(state) {
         //  Creates smooth outline of states when selected
         d3.select(state).moveToFront();
 
+        if(state.id == "LA")
+        {
+            console.log("LA")
+            d3.select("#error_text").text("No data available for Louisiana, please choose another state.");
+            $('#error_dialog').modal({
+                keyboard: false
+            });
+        }
         self.selectedStates.push(stateId);
 
         //  Update state attributes
