@@ -77,6 +77,9 @@ h2 {
 /* Bubble Chart */
 circle {
     opacity: 0.75;
+    stroke :  black;
+    stroke-width : 1.5;
+    fill : red;
 }
 
 /* Line charts */
