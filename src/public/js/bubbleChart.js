@@ -80,15 +80,16 @@ BubbleChart.prototype.init = function () {
                 .attr("transform", "rotate(-90)")
                 .text("ZHVI house cost ($)");
 
+        var selectedYear = 2016;
             // Draw bubble chart for the first time
-            //Start off with year 1996 selected
+            //Start off with year 2016 selected
             self.circles = d3.select("#circles").selectAll(".circle")
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
                 .attr("cx", function(d) { return self.xScale(d.SizeRank) + 14})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
-                .attr("cy", function(d) { return self.yScale(d["1996"]); })
+                .attr("cy", function(d) { return self.yScale(d[selectedYear]); })
             //  .style("fill", function(d) { return self.colorScale(d.SizeRank)});
                 .attr("name", function(d) { return d.RegionName; })
                 .style("fill", "#00688B");
@@ -96,7 +97,7 @@ BubbleChart.prototype.init = function () {
                self.update(+this.value);
             }
              );
-           self.update(1996);
+           self.update(selectedYear);
     }
     )};
 

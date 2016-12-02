@@ -23,7 +23,7 @@ function MapView(bubbleChart, houseChart, rentChart, detailCards) {
  */
 MapView.prototype.init = function() {
     var self = this;
-    self.selectedYear = 1996;
+    self.selectedYear = 2016;
     self.selectedData = "zhvi";
 
     self.margin = {top: 10, right: 20, bottom: 30, left: 50};
@@ -74,20 +74,6 @@ MapView.prototype.init = function() {
                 self.selectState(this);
             })
             .attr("d", path);
-            // .on("mouseover", function(d) {
-            //     div.transition()
-            //         .duration(200)
-            //         .style("opacity", .9)
-            //         .text(d.properties.name)
-            //         .style("left", (d3.event.pageX) + "px")
-            //         .style("top", (d3.event.pageY - 28) + "px");
-            // })
-            // .on("mouseout", function() {
-            //     div.transition()
-            //         .duration(500)
-            //         .style("opacity", 0);
-            // });
-
 
         self.update();
 
@@ -170,7 +156,6 @@ MapView.prototype.update = function(){
         //  Color Legend References:
         //  http://d3-legend.susielu.com/
         //  https://github.com/dataviscourse/2016-dataviscourse-homework/tree/master/hw5
-
         //  Remove Old Legend
         self.legendSvg.select(".legendQuantile").remove();
 
