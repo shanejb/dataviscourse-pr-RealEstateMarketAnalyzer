@@ -213,6 +213,9 @@ HouseChart.prototype.update = function (selectedStates) {
                 var selected = d3.select(this);         // on mouseover of each line, give it a nice thick stroke
                 selected.select(".line")
                     .style("stroke-width", "5px");
+                selected.selectAll("circle")
+                    .attr("r", "5")
+                    .style("stroke-width", "2px");
 
                 // d3.selectAll(".line")
                 //     .style("opacity", function (d) {
@@ -246,6 +249,9 @@ HouseChart.prototype.update = function (selectedStates) {
                 var selected = d3.select(this);
                 selected.select(".line")
                     .style("stroke-width", "2px");
+                selected.selectAll("circle")
+                    .attr("r", "3")
+                    .style("stroke-width", "1px");
 
                 var selectOtherLines = lines
                     .filter(function (d) {
