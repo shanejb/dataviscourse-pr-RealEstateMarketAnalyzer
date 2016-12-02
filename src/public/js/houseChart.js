@@ -66,7 +66,8 @@ HouseChart.prototype.init = function () {
  *
  * @param selectedState
  */
-HouseChart.prototype.update = function (selectedStates) {
+HouseChart.prototype.update = function (selectedStates, selectedYear) {
+    console.log("Selected year on map: " + selectedYear);
     var self = this;
     // selectedStates = ['CA', 'UT', 'NY', 'ND']; // For testing purposes
 
@@ -273,7 +274,9 @@ HouseChart.prototype.update = function (selectedStates) {
                 selected.select(".line")
                     .style("stroke-width", "2px");
                 selected.selectAll("circle")
-                    .attr("r", "3")
+                    .attr("r", function (d) {
+                        return (d.year == selectedYear) ? 5 : 3;
+                    })
                     .style("stroke-width", "1px");
 
                 var selectOtherLines = lines
@@ -346,7 +349,9 @@ HouseChart.prototype.update = function (selectedStates) {
             .duration(500)
             .ease(d3.easeLinear)
             .style("opacity", 1)
-            .attr("r", 3)
+            .attr("r", function (d) {
+                return (d.year == selectedYear) ? 5 : 3;
+            })
             .attr("cx", function (d) {
                 return self.xScale(d.year) + 15;
             })
@@ -359,6 +364,11 @@ HouseChart.prototype.update = function (selectedStates) {
             })
             .attr("visibility", function (d) { // Temporary hack to hide empty values for scatterplot
                 return d.price == 0 ? 'hidden' : '';
+            })
+            .style("stroke", function (d) {
+                var parent = d3.select(this.parentNode).node();
+
+                return (d.year == selectedYear) ? self.zScale(parent.id) : "#FFF";
             });
 
         var lineLabels = lines.select("text")

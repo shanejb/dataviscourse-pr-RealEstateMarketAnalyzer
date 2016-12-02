@@ -79,10 +79,14 @@ MapView.prototype.init = function() {
 
     });
 
+    // Shane, is this a duplicate? It was declared on line#51 as well.
     d3.select("#slider_states")
         .on("input", function() {
                 self.selectedYear = this.value;
                 self.update();
+
+                // Sigmund: Also call update() here to indicate the year on line chart
+                self.houseChart.update(self.selectedStates, self.selectedYear);
             }
         );
 
@@ -298,7 +302,7 @@ MapView.prototype.selectState = function(state) {
     }
 
     // Populate house chart
-    self.houseChart.update(self.selectedStates);
+    self.houseChart.update(self.selectedStates, self.selectedYear);
 
     // Populate rent chart
     self.rentChart.update(self.selectedStates);
