@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    color: #d20a11;
+    /*color: #d20a11;*/
 }
 
 h2 {
@@ -101,15 +101,15 @@ circle {
 
 /* Detail cards */
 
-.container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-flow: row wrap;  /*shorthand for flex-direction and flex-wrap*/
-    align-items: flex-start;
-    /*height: 300px;*/
-    /*justify-content: space-between;*/
-}
+/*.container {*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*flex-wrap: wrap;*/
+    /*flex-flow: row wrap;  !*shorthand for flex-direction and flex-wrap*!*/
+    /*align-items: flex-start;*/
+    /*!*height: 300px;*!*/
+    /*!*justify-content: space-between;*!*/
+/*}*/
 
 /*.card{*/
     /*width: 300px;*/
@@ -180,4 +180,10 @@ div.tooltip {
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
+}
+
+/* Overwrite jumbotron padding */
+.jumbotron {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
