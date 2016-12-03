@@ -34,7 +34,7 @@ BubbleChart.prototype.init = function () {
 
             self.xScale = d3.scaleBand()
                 .domain(data.map(function (d) {
-                    return parseInt(d.SizeRank);
+                    return d.RegionName;
                 })).range([self.yAxisHeight, self.svgWidth ]);
 
             self.maxValue = d3.max(data, function (d) {
@@ -86,7 +86,7 @@ BubbleChart.prototype.init = function () {
                 .data(data)
                 .enter().append("circle")
                 .attr("class", "circle")
-                .attr("cx", function(d) { return self.xScale(d.SizeRank) + 14})
+                .attr("cx", function(d) { return self.xScale(d.RegionName) + 14})
                 .attr("r", function(d) { return self.rScale(d.SizeRank)})
                 .attr("cy", function(d) { return self.yScale(d["1996"]); })
             //  .style("fill", function(d) { return self.colorScale(d.SizeRank)});
