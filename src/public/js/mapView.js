@@ -266,9 +266,6 @@ MapView.prototype.selectState = function(state) {
     //  Checks to make sure a state is not already included in the list
     if(self.selectedStates.includes(stateId) == false) {
 
-        //  Creates smooth outline of states when selected
-        d3.select(state).moveToFront();
-
         if(state.id == "LA")
         {
             console.log("LA")
@@ -276,12 +273,16 @@ MapView.prototype.selectState = function(state) {
             $('#error_dialog').modal({
                 keyboard: false
             });
-        }
-        self.selectedStates.push(stateId);
+        } else {
+            //  Creates smooth outline of states when selected
+            d3.select(state).moveToFront();
 
-        //  Update state attributes
-        self.svg.select("#"+stateId)
-            .classed("states selected_states", true);
+            self.selectedStates.push(stateId);
+
+            //  Update state attributes
+            self.svg.select("#" + stateId)
+                .classed("states selected_states", true);
+        }
     }
     else {
         //  State was selected and then clicked on, this will unselect the state
