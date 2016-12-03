@@ -15,8 +15,8 @@ BubbleChart.prototype.init = function () {
 
     // Gets access to the div element created for this chart from HTML
     self.svgBounds = divBubbleChart.node().getBoundingClientRect();
-    self.xAxisWidth = 40;
-    self.yAxisHeight = 65;
+    self.xAxisWidth = 10;
+    self.yAxisHeight = 85;
     self.svgWidth = self.svgBounds.width - self.xAxisWidth;
     self.svgHeight = 400;
 
@@ -68,17 +68,18 @@ BubbleChart.prototype.init = function () {
             // display x,y axis labels
             self.svg.append("text")
             //     .attr("class", "")
-                .attr("text-anchor", "end")
-                .attr("x", self.svgWidth)
-                .attr("y", self.svgHeight - 25)
+                .attr("text-anchor", "middle")
+                .attr("x", self.svgWidth/2)
+                .attr("y", self.svgHeight - 10)
                 .text("State Size Rank (by Population)");
+
             self.svg.append("text")
-            //  .attr("class", "")
-                .attr("text-anchor", "end")
-                .attr("y", 0)
-                .attr("dy", ".75em")
+            //     .attr("class", "")
+                .attr("text-anchor", "middle")
+                .attr("x", (self.svgHeight - self.yAxisHeight) / 2 * -1)
+                .attr("y", 20)
                 .attr("transform", "rotate(-90)")
-                .text("ZHVI house cost ($)");
+                .text("ZHVI house price ($)");
 
             // Draw bubble chart for the first time
             //Start off with year 1996 selected
