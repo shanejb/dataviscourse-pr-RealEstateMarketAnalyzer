@@ -181,7 +181,6 @@ MapView.prototype.update = function(){
 
         var legendQuantile = d3.legendColor()
             .shapeWidth((self.svgWidth-70)/5)
-            //.cells(10)
             .shapePadding(10)
             .ascending(true)
             .labelFormat(d3.format("$,.0f"))
@@ -310,11 +309,4 @@ MapView.prototype.selectState = function(state) {
 
     // populate detail cards
     self.detailCards.update(self.selectedStates);
-}
-
-
-MapView.prototype.loadYearData = function()
-{
-    var self = this;
-
 }
